@@ -1,0 +1,5 @@
+economies:
+  lemon:
+    displayname: "&lLemon"
+    symbol: "$"
+    starting-money: "100"
