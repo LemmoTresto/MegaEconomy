@@ -87,7 +87,14 @@ public final class MegaEconomy extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        //todo
+        getLogger().info("Saving data..");
+        try {
+            economyManager.saveData();
+            getLogger().info("Saved data!");
+        } catch (Exception e) {
+            getLogger().severe("Error saving data! Non-saved data will be lost!");
+            e.printStackTrace();
+        }
     }
 
     public EconomyManager getEconomyManager() {
