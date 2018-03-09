@@ -46,8 +46,8 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onJoin(PlayerJoinEvent event){
-        if (event.getPlayer().hasPlayedBefore()) registerNewPlayerData(event.getPlayer());
-        else loadPlayerData(event.getPlayer());
+        if (event.getPlayer().hasPlayedBefore()) loadPlayerData(event.getPlayer());
+        else registerNewPlayerData(event.getPlayer());
     }
 
     public void registerNewPlayerData(Player p){
@@ -59,7 +59,10 @@ public class PlayerJoinListener implements Listener {
     }
 
     public void loadPlayerData(Player p){
-        megaEconomy.getEconomyManager().getEconomies().forEach(economy -> economy.getBalances().put(p.getUniqueId().toString(), megaEconomy.getEconomyManager().getBalanceOfPlayer(p, economy)));
-
+        try {
+            megaEconomy.getEconomyManager().getEconomies().forEach(economy -> economy.getBalances().put(p.getUniqueId().toString(), megaEconomy.getEconomyManager().getBalanceOfPlayer(p, economy)));
+        } catch (NullPointerException ignored){
+            registerNewPlayerData(p);
+        }
     }
 }
