@@ -53,14 +53,16 @@ public class PlayerJoinListener implements Listener {
     public void registerNewPlayerData(Player p){
         for (Economy economy : megaEconomy.getEconomyManager().getEconomies()){
             BigInteger startingMoney = new BigInteger(megaEconomy.getConfig().getString("economies." + economy.getName() + ".starting-money"));
-            megaEconomy.getEconomyManager().getDataYml().set(economy.getName() + "." + p.getUniqueId().toString(), startingMoney);
-            economy.getBalances().put(p.getUniqueId().toString(), startingMoney);
+            String path = economy.getName() + "." + p.getUniqueId().toString();
+            if (megaEconomy.getConfig().isSet(path)) continue;
+            megaEconomy.getEconomyManager().getDataYml().set(path, startingMoney);
+            economy.getBalances().putIfAbsent(p.getUniqueId().toString(), startingMoney);
         }
     }
 
     public void loadPlayerData(Player p){
         try {
-            megaEconomy.getEconomyManager().getEconomies().forEach(economy -> economy.getBalances().put(p.getUniqueId().toString(), megaEconomy.getEconomyManager().getBalanceOfPlayer(p, economy)));
+            megaEconomy.getEconomyManager().getEconomies().forEach(economy -> economy.getBalances().putIfAbsent(p.getUniqueId().toString(), megaEconomy.getEconomyManager().getBalanceOfPlayer(p, economy)));
         } catch (NullPointerException ignored){
             registerNewPlayerData(p);
         }
