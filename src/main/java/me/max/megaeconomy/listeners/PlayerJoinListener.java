@@ -46,7 +46,7 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onJoin(PlayerJoinEvent event){
-        if (!event.getPlayer().hasPlayedBefore()) registerNewPlayerData(event.getPlayer());
+        if (event.getPlayer().hasPlayedBefore()) registerNewPlayerData(event.getPlayer());
         else loadPlayerData(event.getPlayer());
     }
 
