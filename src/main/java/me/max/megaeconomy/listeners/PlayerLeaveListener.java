@@ -1,4 +1,47 @@
+/*
+ *
+ *  *
+ *  *  *
+ *  *  *  * MegaEconomy - The only limit is your imagination
+ *  *  *  * Copyright (C) 2018 Max Berkelmans AKA LemmoTresto
+ *  *  *  *
+ *  *  *  * This program is free software: you can redistribute it and/or modify
+ *  *  *  * it under the terms of the GNU General Public License as published by
+ *  *  *  * the Free Software Foundation, either version 3 of the License, or
+ *  *  *  * (at your option) any later version.
+ *  *  *  *
+ *  *  *  * This program is distributed in the hope that it will be useful,
+ *  *  *  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  *  *  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  *  *  * GNU General Public License for more details.
+ *  *  *  *
+ *  *  *  * You should have received a copy of the GNU General Public License
+ *  *  *  * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *  *  *
+ *  *
+ *
+ */
+
 package me.max.megaeconomy.listeners;
 
-public class PlayerLeaveListener {
+import me.max.megaeconomy.MegaEconomy;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
+
+public class PlayerLeaveListener implements Listener {
+
+    private MegaEconomy megaEconomy;
+
+    public PlayerLeaveListener(MegaEconomy megaEconomy){
+        this.megaEconomy = megaEconomy;
+
+        this.megaEconomy.getServer().getPluginManager().registerEvents(this, megaEconomy);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onLeave(PlayerQuitEvent event){
+        megaEconomy.getEconomyManager().getEconomies().forEach(economy -> economy.getBalances().remove(event.getPlayer().getUniqueId().toString()));
+    }
 }

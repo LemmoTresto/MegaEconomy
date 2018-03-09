@@ -1,5 +1,18 @@
+# This option allows you to add as many economies as you want!
+# Every economy has a 'name'.
+# In this example it is 'lemon'
+# An economy also has a displayname, symbol and the starting-money which is how much money a player gets for the first time.
+# You cannot have multiple economies with the same name!
 economies:
   lemon:
     displayname: "&lLemon"
-    symbol: "$"
+    symbol: "&6L"
     starting-money: "100"
+
+# Certain messages that are sent to players can be changed.
+messages:
+  pay:
+    receive-money: "You received money from %sender%"
+    send-money: "You send money to %receiver%"
+  bal:
+    self: "Your balance is: %formatted_balance%"

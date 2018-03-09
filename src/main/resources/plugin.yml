@@ -1,3 +1,4 @@
 name: MegaEconomy
+author: LemmoTresto
 version: ${project.version}
 main: me.max.megaeconomy.MegaEconomy
