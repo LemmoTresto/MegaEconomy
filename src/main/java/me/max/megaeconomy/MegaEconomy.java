@@ -39,6 +39,8 @@ public final class MegaEconomy extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
+
         try {
             getLogger().info("Initialising Economies..");
             economyManager = new EconomyManager(this);
